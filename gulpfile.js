@@ -26,8 +26,8 @@ gulp.task('browserify', function() {
         //Pass desired output filename to vinyl-source-stream
         .pipe(source('app-bundle.js'))
         // Start piping stream to tasks!
-        .pipe(gulp.dest('./app/js')),
-        pipe(connect.reload());
+        .pipe(gulp.dest('./app/js/'))
+        .pipe(connect.reload());
 })
 
 gulp.task('html', function () {
@@ -42,10 +42,7 @@ gulp.task('css', function () {
 
 gulp.task('bower', function () {
   gulp.src('./app/index.html')
-    .pipe(wiredep({
-    	directory: './vendor/',
-    	bowerJson: require('./bower.json')
-    }))
+    .pipe(wiredep())
     .pipe(gulp.dest('./app'));
 });
 
@@ -57,10 +54,10 @@ gulp.task('webserver', function() {
 });
 
 gulp.task('watch', function() {
-    gulp.watch('./app/js/*/*.js', ['browserify'])
-    gulp.watch('./app/styles/*.css', ['css'])
-    gulp.watch('./app/*.html', ['html']),
-    gulp.watch('bower.json', ['bower'])
+    gulp.watch('/app/js/*/*.js', ['browserify']);
+    gulp.watch('/app/styles/*.css', ['css']);
+    gulp.watch('/app/*.html', ['html']);
+    gulp.watch('bower.json', ['bower']);
 });
 
 gulp.task('default', ['bower', 'watch', 'webserver', 'browserify']);

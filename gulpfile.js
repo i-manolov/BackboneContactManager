@@ -7,6 +7,7 @@ var gulp = require('gulp'),
 	livereload = require('gulp-livereload'),
 	connect = require('gulp-connect'),
 	source = require('vinyl-source-stream'),
+  mocha = require('gulp-mocha'),
 	wiredep = require('wiredep').stream;
 
 
@@ -46,6 +47,12 @@ gulp.task('bower', function () {
     .pipe(gulp.dest('./app'));
 });
 
+gulp.task('test', function() {
+  return gulp
+    .src('./test/*/*.js')
+    .pipe(mocha());
+});
+
 gulp.task('webserver', function() {
   connect.server({
   	root: 'app',
@@ -58,8 +65,9 @@ gulp.task('watch', function() {
     gulp.watch('/app/styles/*.css', ['css']);
     gulp.watch('/app/*.html', ['html']);
     gulp.watch('bower.json', ['bower']);
+    gulp.watch('./test/*/*.js', ['test']);
 });
 
-gulp.task('default', ['bower', 'watch', 'webserver', 'browserify']);
+gulp.task('default', ['bower', 'watch', 'webserver', 'browserify', 'test']);
 
 

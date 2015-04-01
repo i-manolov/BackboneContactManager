@@ -1,5 +1,20 @@
 {
   "name": "SimplyContact",
+  "browser": {
+    "jquery": "./vendor/jquery/dist/jquery.min.js",
+    "underscore": "./vendor/underscore/underscore.js",
+    "backbone": "./vendor/backbone/backbone.js"
+  },
+  "browserify-shim": {
+    "jquery": "$",
+    "underscore": "_",
+    "backbone": "Backbone"
+  },
+  "browserify": {
+    "transform": [
+      "browserify-shim"
+    ]
+  },
   "devDependencies": {
     "browserify": "^9.0.3",
     "browserify-shim": "^3.8.3",

@@ -1,4 +1,5 @@
 var gulp = require('gulp'),
+  browserify = require('browserify')
 	jshint = require('gulp-jshint'),
 	uglify = require('gulp-uglify'),
 	rename = require('gulp-rename'),
@@ -6,8 +7,7 @@ var gulp = require('gulp'),
 	livereload = require('gulp-livereload'),
 	connect = require('gulp-connect'),
 	source = require('vinyl-source-stream'),
-	wiredep = require('wiredep').stream,
-	browserify = require('browserify');
+	wiredep = require('wiredep').stream;
 
 
 /* 
@@ -21,10 +21,10 @@ gulp.task('lint', function() {
 
 gulp.task('browserify', function() {
     // Single entry point to browserify 
-    return browserify ('./app/js/app.js')
+    return browserify ('./app/js/ContactManager.js')
         .bundle ()
         //Pass desired output filename to vinyl-source-stream
-        .pipe(source('app-bundle.js'))
+        .pipe(source('bundle.js'))
         // Start piping stream to tasks!
         .pipe(gulp.dest('./app/js/'))
         .pipe(connect.reload());

@@ -1,14 +1,14 @@
-/*
 'use strict';
-var assert = require('chai').expect;
+var assert = require('chai').expect,
+    ContactManager.Models.Contact = require ('./app/js/models/contact.js');
 
 describe('Contact Model', function () {
     beforeEach(function () {
-        this.ContactModel = new app.Contact();
+        this.contact = new ContactManager.Models.Contact();
     });
     describe('Initialization', function() {
     	it('default the name to null', function () {
-    		
+    		this.contact.get('name');
     	});
     	it('default the group to null', function () {
     		
@@ -28,4 +28,4 @@ describe('Contact Model', function () {
     });
 
 });
-*/
+

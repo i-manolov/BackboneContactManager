@@ -24,3 +24,23 @@ __e( photo ) +
 }
 return __p
 }})();
+(function() {
+window["ContactManager"] = window["ContactManager"] || {};
+
+window["ContactManager"]["contactform.tmpl"] = function(obj) {
+obj || (obj = {});
+var __t, __p = '', __e = _.escape;
+with (obj) {
+__p += '<h2 class="page-header text-center">' +
+((__t = ( isNew ? 'Create' : 'Edit' )) == null ? '' : __t) +
+' Contact</h2>\n<form role="form" class="form-horizontal">\n  <div class="form-group">\n    <label class="col-sm-4 control-label">Full name:</label>\n    <div class="col-sm-6">\n      <input type="text" class="form-control" value="' +
+__e( name ) +
+'">\n    </div>\n  </div>\n  <div class="form-group">\n    <label class="col-sm-4 control-label">Email address:</label>\n    <div class="col-sm-6">\n      <input type="email" class="form-control" value="' +
+__e( email ) +
+'">\n    </div>\n  </div>\n  <div class="form-group">\n    <label class="col-sm-4 control-label">Telephone number:</label>\n    <div class="col-sm-6">\n      <input type="tel" class="form-control" value="' +
+__e( tel ) +
+'">\n    </div>\n  </div>\n  <div class="form-group">\n    <div class="col-sm-offset-4 col-sm-3">\n      <button type="submit" class="btn btn-outline btn-lg btn-block">Submit</button>\n    </div>\n    <div class="col-sm-3">\n      <a href="#contacts" class="btn btn-outline btn-lg btn-block">Cancel</a>\n    </div>\n  </div>\n</form>';
+
+}
+return __p
+}})();

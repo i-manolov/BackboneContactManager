@@ -1,8 +1,10 @@
 (function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);var f=new Error("Cannot find module '"+o+"'");throw f.code="MODULE_NOT_FOUND",f}var l=n[o]={exports:{}};t[o][0].call(l.exports,function(e){var n=t[o][1][e];return s(n?n:e)},l,l.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(require,module,exports){
 'use strict'
 
-var ContactsView = require ('./views/contacts.js'),
-    ContactsCollection = require ('./collections/contacts.js')
+var Backbone = require ('backbone'),
+    ContactsView = require ('./views/contacts.js'),
+    ContactsCollection = require ('./collections/contacts.js'),
+    Router = require ('./router/router.js'),
 	$ = require('jquery');
 
 
@@ -63,7 +65,20 @@ window.ContactManager = {
 	Routers: {},
 	init: function () {
         var contactsCollection = new ContactsCollection(contacts);
-		var view = new ContactsView({collection: contactsCollection});
+        var router = new Router();
+
+        router.on('route:home', function() {
+          router.navigate('contacts', {
+            trigger: true,
+            replace: true
+          });
+        });
+
+        router.on('route:showContacts', function() {
+            var view = new ContactsView({collection: contactsCollection});
+        });
+
+        Backbone.history.start();
 	}
 
 }
@@ -75,7 +90,7 @@ $(document).ready(function () {
 
 
 
-},{"./collections/contacts.js":2,"./views/contacts.js":5,"jquery":7}],2:[function(require,module,exports){
+},{"./collections/contacts.js":2,"./router/router.js":4,"./views/contacts.js":6,"backbone":7,"jquery":8}],2:[function(require,module,exports){
 'use strict'
 
 var Backbone = require ('backbone'),
@@ -86,7 +101,7 @@ module.exports = Backbone.Collection.extend({
 	model: Contact,
 	//localStorage: new Backbone.LocalStorage.Store('contacts')
 });
-},{"../models/contact.js":3,"backbone":6,"underscore":8}],3:[function(require,module,exports){
+},{"../models/contact.js":3,"backbone":7,"underscore":9}],3:[function(require,module,exports){
 'use strict'
 
 var	Backbone = require('backbone');
@@ -106,7 +121,20 @@ module.exports = Backbone.Model.extend({
   }
 });
 
-},{"backbone":6,"underscore":8}],4:[function(require,module,exports){
+},{"backbone":7,"underscore":9}],4:[function(require,module,exports){
+'use strict'
+
+var Backbone = require('backbone');
+
+module.exports = Backbone.Router.extend ({
+  routes: {
+    '': 'home',
+    'contacts': 'showContacts',
+    'contacts/new': 'newContact',
+    'contacts/edit/:id': 'editContact'
+  }
+});
+},{"backbone":7}],5:[function(require,module,exports){
 'use strict'
 
 var Backbone = require('backbone'),
@@ -160,7 +188,7 @@ module.exports = Backbone.View.extend({
     }
 });
 
-},{"backbone":6,"jquery":7,"underscore":8}],5:[function(require,module,exports){
+},{"backbone":7,"jquery":8,"underscore":9}],6:[function(require,module,exports){
 'use strict'
 
 var Backbone = require ('backbone'),
@@ -186,7 +214,7 @@ module.exports = Backbone.View.extend({
   	}, this);
   }
 });
-},{"./contact.js":4,"backbone":6,"jquery":7,"underscore":8}],6:[function(require,module,exports){
+},{"./contact.js":5,"backbone":7,"jquery":8,"underscore":9}],7:[function(require,module,exports){
 (function (global){
 ;__browserify_shim_require__=require;(function browserifyShim(module, exports, require, define, browserify_shim__define__module__export__) {
 //     Backbone.js 1.1.2
@@ -1803,7 +1831,7 @@ module.exports = Backbone.View.extend({
 }).call(global, undefined, undefined, undefined, undefined, function defineExport(ex) { module.exports = ex; });
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{}],7:[function(require,module,exports){
+},{}],8:[function(require,module,exports){
 (function (global){
 ;__browserify_shim_require__=require;(function browserifyShim(module, exports, require, define, browserify_shim__define__module__export__) {
 /*! jQuery v2.1.3 | (c) 2005, 2014 jQuery Foundation, Inc. | jquery.org/license */
@@ -1816,7 +1844,7 @@ module.exports = Backbone.View.extend({
 }).call(global, undefined, undefined, undefined, undefined, function defineExport(ex) { module.exports = ex; });
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{}],8:[function(require,module,exports){
+},{}],9:[function(require,module,exports){
 (function (global){
 ;__browserify_shim_require__=require;(function browserifyShim(module, exports, require, define, browserify_shim__define__module__export__) {
 //     Underscore.js 1.8.2

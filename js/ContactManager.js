@@ -1,7 +1,9 @@
 'use strict'
 
-var ContactsView = require ('./views/contacts.js'),
-    ContactsCollection = require ('./collections/contacts.js')
+var Backbone = require ('backbone'),
+    ContactsView = require ('./views/contacts.js'),
+    ContactsCollection = require ('./collections/contacts.js'),
+    Router = require ('./router/router.js'),
 	$ = require('jquery');
 
 
@@ -62,7 +64,20 @@ window.ContactManager = {
 	Routers: {},
 	init: function () {
         var contactsCollection = new ContactsCollection(contacts);
-		var view = new ContactsView({collection: contactsCollection});
+        var router = new Router();
+
+        router.on('route:home', function() {
+          router.navigate('contacts', {
+            trigger: true,
+            replace: true
+          });
+        });
+
+        router.on('route:showContacts', function() {
+            var view = new ContactsView({collection: contactsCollection});
+        });
+
+        Backbone.history.start();
 	}
 
 }

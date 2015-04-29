@@ -59,11 +59,11 @@ gulp.task('templates', function (){
 });
 
 gulp.task('watch', function() {
-    gulp.watch('./js/*/*.js', ['browserify']);
+    gulp.watch('./js/**/*.js', ['browserify']);
     gulp.watch('./styles/*.css', ['css']);
     gulp.watch('./*.html', ['html']);
     gulp.watch('bower.json', ['bower']);
-    gulp.watch('./js/templates/*.tmpl', ['templates'])
+    gulp.watch('./js/templates/*.tmpl', ['templates']);
     //gulp.watch('./test/*/*.js', ['test']);
 });
 

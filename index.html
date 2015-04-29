@@ -12,15 +12,17 @@
 
 <body>
     <div class="container-fluid">
-        <nav class="navbar navbar-default">
-            <label class="navbar-brand">Backbone Contact Manager</label>
+        <nav class="navbar navbar-inverse">
+            <label class="navbar-brand" style="font-size: 1.5em">Backbone Contact Manager</label>
         </nav>
-        <div class="row">
-            <button type="button" class="btn btn-primary btn-lg" style="float:right; margin-right:20px">
-                <span class="glyphicon glyphicon-plus"></span>Add New Contact
-            </button>
-        </div>
-        <div id="directory" class="row">
+        <div id="contacts-view">
+            <div class="row">
+                <a href="#contacts/new" class="btn btn-primary btn-lg col-sm-offset-5">
+                    <span class="glyphicon glyphicon-plus"></span>Add New Contact
+                </a>
+            </div>
+            <div id="directory" class="row">
+            </div>
         </div>
     </div>
     <!-- bower:js -->

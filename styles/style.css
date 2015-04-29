@@ -1,0 +1,80 @@
+.contact {
+    width: 310px; /*  350px; */
+    height: 90px;
+    background-color: white;
+    border: solid;
+    border-width: 1px;
+    border-color: grey;
+    padding: 0px;
+    rgba(226, 226, 226, 1);
+    background: -moz-linear-gradient(top, rgba(226, 226, 226, 1) 0%, rgba(219, 219, 219, 1) 50%, rgba(209, 209, 209, 1) 51%, rgba(254, 254, 254, 1) 100%);
+    background: -webkit-gradient(left top, left bottom, color-stop(0%, rgba(226, 226, 226, 1)), color-stop(50%, rgba(219, 219, 219, 1)), color-stop(51%, rgba(209, 209, 209, 1)), color-stop(100%, rgba(254, 254, 254, 1)));
+    background: -webkit-linear-gradient(top, rgba(226, 226, 226, 1) 0%, rgba(219, 219, 219, 1) 50%, rgba(209, 209, 209, 1) 51%, rgba(254, 254, 254, 1) 100%);
+    background: -o-linear-gradient(top, rgba(226, 226, 226, 1) 0%, rgba(219, 219, 219, 1) 50%, rgba(209, 209, 209, 1) 51%, rgba(254, 254, 254, 1) 100%);
+    background: -ms-linear-gradient(top, rgba(226, 226, 226, 1) 0%, rgba(219, 219, 219, 1) 50%, rgba(209, 209, 209, 1) 51%, rgba(254, 254, 254, 1) 100%);
+    background: linear-gradient(to bottom, rgba(226, 226, 226, 1) 0%, rgba(219, 219, 219, 1) 50%, rgba(209, 209, 209, 1) 51%, rgba(254, 254, 254, 1) 100%);
+    filter: progid: DXImageTransform.Microsoft.gradient( startColorstr='#e2e2e2', endColorstr='#fefefe', GradientType=0);
+    border-radius: 10px 10px 10px 10px;
+    -moz-border-radius: 10px 10px 10px 10px;
+    -webkit-border-radius: 10px 10px 10px 10px;
+    -webkit-box-shadow: 10px 10px 33px -5px rgba(0, 0, 0, 0.75);
+    -moz-box-shadow: 10px 10px 33px -5px rgba(0, 0, 0, 0.75);
+    box-shadow: 10px 10px 33px -5px rgba(0, 0, 0, 0.75);
+}
+.contact-header {
+    /* background-color: #1E23B7; */
+    width: 20px;
+    height: 100%;
+    display: block;
+    float: left;
+    border-radius: 10px 0px 0px 10px 
+}
+.contact-image {
+    display: block;
+    height: 88px;
+    border: solid;
+    border-width: 2px;
+    border-color: white
+}
+.contact-name {
+    width: 100%;
+    text-align: center;
+    margin-top: 30px;
+    color: black;
+}
+
+/*
+.contact-info {
+    text-align: center;
+}1*/
+
+.contact-info {
+    margin-top: 30px;
+    text-align: left;
+    margin-left: 1px;
+    padding-left: 30px;
+    padding-right: 10px;
+    display: none;
+}
+.img-div {
+    float: left;
+}
+.glyphicon {
+    padding-right: 0px;
+}
+
+.buffer {
+	margin-bottom: 140px;
+}
+
+.row {
+	margin-top:30px;
+}
+
+.bigger-glyphicon {
+    font-size:1.1em;
+}
+
+label {
+    color:black;
+}

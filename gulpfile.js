@@ -22,29 +22,29 @@ gulp.task('lint', function() {
 
 gulp.task('browserify', function() {
     // Single entry point to browserify 
-    return browserify ('./app/js/ContactManager.js')
+    return browserify ('./js/ContactManager.js')
         .bundle ()
         //Pass desired output filename to vinyl-source-stream
         .pipe(source('bundle.js'))
         // Start piping stream to tasks!
-        .pipe(gulp.dest('./app/js/'))
+        .pipe(gulp.dest('./'))
         .pipe(connect.reload());
 })
 
 gulp.task('html', function () {
-  gulp.src('./app/*.html')
+  gulp.src('./*.html')
     .pipe(connect.reload());
 });
 
 gulp.task('css', function () {
-  gulp.src('./app/styles/*.css')
+  gulp.src('./styles/*.css')
     .pipe(connect.reload());
 });
 
 gulp.task('bower', function () {
-  gulp.src('./app/index.html')
+  gulp.src('./index.html')
     .pipe(wiredep())
-    .pipe(gulp.dest('./app'));
+    .pipe(gulp.dest('./'));
 });
 
 gulp.task('test', function() {
@@ -55,19 +55,19 @@ gulp.task('test', function() {
 
 gulp.task('webserver', function() {
   connect.server({
-  	root: 'app',
+  	root: '.',
     livereload:true
   });
 });
 
 gulp.task('watch', function() {
-    gulp.watch('/app/js/*/*.js', ['browserify']);
-    gulp.watch('/app/styles/*.css', ['css']);
-    gulp.watch('/app/*.html', ['html']);
+    gulp.watch('./js/*/*.js', ['browserify']);
+    gulp.watch('./styles/*.css', ['css']);
+    gulp.watch('./*.html', ['html']);
     gulp.watch('bower.json', ['bower']);
-    gulp.watch('./test/*/*.js', ['test']);
+    //gulp.watch('./test/*/*.js', ['test']);
 });
 
-gulp.task('default', ['bower', 'watch', 'webserver', 'browserify', 'test']);
+gulp.task('default', ['bower', 'watch', 'webserver', 'browserify']);
 
 

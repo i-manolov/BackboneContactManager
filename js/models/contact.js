@@ -9,6 +9,7 @@ module.exports = Backbone.Model.extend({
     phone: null,
     address:null,
     email: null,
+    group: null,
     photo: null
   },
 

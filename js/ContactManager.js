@@ -1,6 +1,8 @@
 'use strict'
 
 var Backbone = require ('backbone'),
+    Contact = require('./models/contact.js'),
+    ContactForm = require('./views/contactform.js'),
     ContactsView = require ('./views/contacts.js'),
     ContactsCollection = require ('./collections/contacts.js'),
     Router = require ('./router/router.js'),
@@ -74,10 +76,23 @@ window.ContactManager = {
         });
 
         router.on('route:showContacts', function() {
-            var view = new ContactsView({collection: contactsCollection});
+            var contactsView = new ContactsView({collection: contactsCollection});
         });
 
-        Backbone.history.start();
+        router.on('route:newContact', function (){
+            var newContactForm = new ContactForm({
+                model: new Contact()
+            });
+
+            newContactForm.on('form:submitted', function(contact) {
+              contactsCollection.add(contact);
+              var contactsView = new ContactsView({collection: contactsCollection});
+              router.navigate('contacts', {trigger:true});
+            });
+
+        });
+
+        Backbone.history.start({});
 	}
 
 }

@@ -2,6 +2,8 @@
 'use strict'
 
 var Backbone = require ('backbone'),
+    Contact = require('./models/contact.js'),
+    ContactForm = require('./views/contactform.js'),
     ContactsView = require ('./views/contacts.js'),
     ContactsCollection = require ('./collections/contacts.js'),
     Router = require ('./router/router.js'),
@@ -75,10 +77,23 @@ window.ContactManager = {
         });
 
         router.on('route:showContacts', function() {
-            var view = new ContactsView({collection: contactsCollection});
+            var contactsView = new ContactsView({collection: contactsCollection});
         });
 
-        Backbone.history.start();
+        router.on('route:newContact', function (){
+            var newContactForm = new ContactForm({
+                model: new Contact()
+            });
+
+            newContactForm.on('form:submitted', function(contact) {
+              contactsCollection.add(contact);
+              var contactsView = new ContactsView({collection: contactsCollection});
+              router.navigate('contacts', {trigger:true});
+            });
+
+        });
+
+        Backbone.history.start({});
 	}
 
 }
@@ -90,7 +105,7 @@ $(document).ready(function () {
 
 
 
-},{"./collections/contacts.js":2,"./router/router.js":4,"./views/contacts.js":6,"backbone":7,"jquery":8}],2:[function(require,module,exports){
+},{"./collections/contacts.js":2,"./models/contact.js":3,"./router/router.js":4,"./views/contactform.js":6,"./views/contacts.js":7,"backbone":8,"jquery":9}],2:[function(require,module,exports){
 'use strict'
 
 var Backbone = require ('backbone'),
@@ -101,7 +116,7 @@ module.exports = Backbone.Collection.extend({
 	model: Contact,
 	//localStorage: new Backbone.LocalStorage.Store('contacts')
 });
-},{"../models/contact.js":3,"backbone":7,"underscore":9}],3:[function(require,module,exports){
+},{"../models/contact.js":3,"backbone":8,"underscore":10}],3:[function(require,module,exports){
 'use strict'
 
 var	Backbone = require('backbone');
@@ -113,6 +128,7 @@ module.exports = Backbone.Model.extend({
     phone: null,
     address:null,
     email: null,
+    group: null,
     photo: null
   },
 
@@ -121,7 +137,7 @@ module.exports = Backbone.Model.extend({
   }
 });
 
-},{"backbone":7,"underscore":9}],4:[function(require,module,exports){
+},{"backbone":8,"underscore":10}],4:[function(require,module,exports){
 'use strict'
 
 var Backbone = require('backbone');
@@ -134,7 +150,7 @@ module.exports = Backbone.Router.extend ({
     'contacts/edit/:id': 'editContact'
   }
 });
-},{"backbone":7}],5:[function(require,module,exports){
+},{"backbone":8}],5:[function(require,module,exports){
 'use strict'
 
 var Backbone = require('backbone'),
@@ -188,7 +204,48 @@ module.exports = Backbone.View.extend({
     }
 });
 
-},{"backbone":7,"jquery":8,"underscore":9}],6:[function(require,module,exports){
+},{"backbone":8,"jquery":9,"underscore":10}],6:[function(require,module,exports){
+'use strict'
+
+var Backbone = require('backbone'),
+    _ = require('underscore'),
+    $ = require('jquery');
+
+ module.exports = Backbone.View.extend({
+  template: window['ContactManager']['contactform.tmpl'],
+
+  el: $("#main-container"),
+
+  events: {
+    'submit .contact-form': 'onFormSubmit'
+  },
+
+  initialize: function () {
+    this.render();
+  },
+
+  render: function() {
+    var html = this.template(_.extend(this.model.toJSON(), {
+      isNew: this.model.isNew()
+    }));
+    this.$el.html(html);
+  },
+
+  onFormSubmit: function(e) {
+    e.preventDefault();
+    this.trigger('form:submitted', {
+      name: this.$('.contact-name-input').val(),
+      phone: this.$('.contact-phone-input').val(),
+      email: this.$('.contact-email-input').val(),
+      group: this.$('.contact-group-input').val(),
+      address: this.$('.contact-address-input').val()
+    });
+  }
+
+
+});
+
+},{"backbone":8,"jquery":9,"underscore":10}],7:[function(require,module,exports){
 'use strict'
 
 var Backbone = require ('backbone'),
@@ -214,7 +271,7 @@ module.exports = Backbone.View.extend({
   	}, this);
   }
 });
-},{"./contact.js":5,"backbone":7,"jquery":8,"underscore":9}],7:[function(require,module,exports){
+},{"./contact.js":5,"backbone":8,"jquery":9,"underscore":10}],8:[function(require,module,exports){
 (function (global){
 ;__browserify_shim_require__=require;(function browserifyShim(module, exports, require, define, browserify_shim__define__module__export__) {
 //     Backbone.js 1.1.2
@@ -1831,7 +1888,7 @@ module.exports = Backbone.View.extend({
 }).call(global, undefined, undefined, undefined, undefined, function defineExport(ex) { module.exports = ex; });
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{}],8:[function(require,module,exports){
+},{}],9:[function(require,module,exports){
 (function (global){
 ;__browserify_shim_require__=require;(function browserifyShim(module, exports, require, define, browserify_shim__define__module__export__) {
 /*! jQuery v2.1.3 | (c) 2005, 2014 jQuery Foundation, Inc. | jquery.org/license */
@@ -1844,7 +1901,7 @@ module.exports = Backbone.View.extend({
 }).call(global, undefined, undefined, undefined, undefined, function defineExport(ex) { module.exports = ex; });
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{}],9:[function(require,module,exports){
+},{}],10:[function(require,module,exports){
 (function (global){
 ;__browserify_shim_require__=require;(function browserifyShim(module, exports, require, define, browserify_shim__define__module__export__) {
 //     Underscore.js 1.8.2

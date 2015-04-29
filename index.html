@@ -15,48 +15,14 @@
         <nav class="navbar navbar-default">
             <label class="navbar-brand">Backbone Contact Manager</label>
         </nav>
-        <div id="directory" class="row">
-            <button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#addNewContactModal" style="float:right; margin-right:20px">
+        <div class="row">
+            <button type="button" class="btn btn-primary btn-lg" style="float:right; margin-right:20px">
                 <span class="glyphicon glyphicon-plus"></span>Add New Contact
             </button>
         </div>
+        <div id="directory" class="row">
+        </div>
     </div>
-
-    
-    <!-- UNDERSCORE TEMPLATES -->
-    <script type="text/template" id="contactTemplate">
-        <a class="btn contact">
-                    <div class="contact-header" style="background-color:<%= groupColor %>"></div>
-                    <div class="img-div">
-                        <img src=<%= photo %> class="contact-image img-circle">
-                    </div>
-                    <div class="contact-name">
-                        <h4> <%= name %></h4>
-                    </div>
-                    <div class='contact-info'> 
-                        <div style="float:right;">
-                            <button type="button" class="btn btn-primary editBtn" title="Edit">
-                                <span class="glyphicon glyphicon-edit bigger-glyphicon"></span>
-                            </button>
-                            <button type="button" class="btn btn-danger deleteBtn" title="Delete">
-                                <span class="glyphicon glyphicon-trash bigger-glyphicon"></span>
-                            </button>
-                        </div>
-                        <br><br>
-                        <span class='glyphicon glyphicon-info-sign'></span>
-                        <label><%= group %></label>
-                        <br>
-                        <span class="glyphicon glyphicon-map-marker"></span>
-                        <label><%= address %></label>
-                        <br>
-                        <span class="glyphicon glyphicon-envelope"></span>
-                        <label><%= email %></label>
-                        <br>
-                        <span class="glyphicon glyphicon-earphone"></span>
-                        <label><%= phone %></label>
-                    </div>
-                </a>
-    </script>
     <!-- bower:js -->
     <script src="vendor/jquery/dist/jquery.js"></script>
     <script src="vendor/underscore/underscore.js"></script>
@@ -64,6 +30,8 @@
     <script src="vendor/backbone.localstorage/backbone.localStorage.js"></script>
     <script src="vendor/bootstrap/dist/js/bootstrap.js"></script>
     <!-- endbower -->
+    <script type="text/javascript" src="js/templates/templates.js"></script>
+    <script type="text/javascript" src="js/bundle.js"></script>
 </body>
 
 </html>

@@ -6,12 +6,13 @@ var _ = require ('underscore');
 module.exports = Backbone.Model.extend({
   defaults: {
     name: null,
-    tel: null,
+    phone: null,
+    address:null,
     email: null,
-    avatar: null
+    photo: null
   },
 
   initialize: function () {
-  	this.set('avatar', _.random(1, 20) + '.jpg');
+  	this.set('photo', _.random(1, 30) + '.jpg');
   }
 });

@@ -2,10 +2,9 @@
 
 var Backbone = require ('backbone'),
 	_ = require ('underscore'),
-	Backbone.LocalStorage = require("backbone.localstorage"),
-	ContactManager.Models.Contact = require('../../models/contact.js');
+	Contact = require('../models/contact.js');
 
-ContactManager.Collections.Contacts = Backbone.Collection.extend({
-	model: ContactManager.Models.Contact,
-	localStorage: new Backbone.LocalStorage.Store('contacts')
+module.exports = Backbone.Collection.extend({
+	model: Contact,
+	//localStorage: new Backbone.LocalStorage.Store('contacts')
 });

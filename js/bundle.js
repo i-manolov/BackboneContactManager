@@ -1,9 +1,60 @@
 (function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);var f=new Error("Cannot find module '"+o+"'");throw f.code="MODULE_NOT_FOUND",f}var l=n[o]={exports:{}};t[o][0].call(l.exports,function(e){var n=t[o][1][e];return s(n?n:e)},l,l.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(require,module,exports){
 'use strict'
 
-var Contact = require ('./models/contact.js'),
+var ContactsView = require ('./views/contacts.js'),
+    ContactsCollection = require ('./collections/contacts.js')
 	$ = require('jquery');
 
+
+var contacts = [{
+    	name: 'Contact 1',
+    	address: '1 street, a town, a city, AB12 3CD',
+    	phone: '0123456789',
+    	email: 'anemail@me.com',
+    	group: 'family'
+	}, {
+    	name: 'Contact 2',
+    	address: '1 street, a town, a city, AB12 3CD',
+    	phone: '0123456789',
+    	email: 'anemail@me.com',
+    	group: 'family'
+	}, {
+    	name: 'Contact 3',
+    	address: '1 street, a town, a city, AB12 3CD',
+    	phone: '0123456789',
+    	email: 'anemail@me.com',
+    	group: 'friend'
+	}, {
+    	name: 'Contact 4',
+    	address: '1 street, a town, a city, AB12 3CD',
+    	phone: '0123456789',
+    	email: 'anemail@me.com',
+    	group: 'colleague'
+	}, {
+    	name: 'Contact 5',
+    	address: '1 street, a town, a city, AB12 3CD',
+    	phone: '0123456789',
+    	email: 'anemail@me.com',
+    	group: 'family'
+	}, {
+    	name: 'Contact 6',
+    	address: '1 street, a town, a city, AB12 3CD',
+    	phone: '0123456789',
+    	email: 'anemail@me.com',
+    	group: 'colleague'
+	}, {
+    	name: 'Contact 7',
+    	address: '1 street, a town, a city, AB12 3CD',
+    	phone: '0123456789',
+    	email: 'anemail@me.com',
+    	group: 'friend'
+	}, {
+    	name: 'Contact 8',
+    	address: '1 street, a town, a city, AB12 3CD',
+    	phone: '0123456789',
+    	email: 'anemail@me.com',
+    	group: 'family'
+}]
 
 window.ContactManager = {
 	Models: {},
@@ -11,7 +62,8 @@ window.ContactManager = {
 	Views: {},
 	Routers: {},
 	init: function () {
-		console.log('Hello World')
+        var contactsCollection = new ContactsCollection(contacts);
+		var view = new ContactsView({collection: contactsCollection});
 	}
 
 }
@@ -23,7 +75,18 @@ $(document).ready(function () {
 
 
 
-},{"./models/contact.js":2,"jquery":4}],2:[function(require,module,exports){
+},{"./collections/contacts.js":2,"./views/contacts.js":5,"jquery":7}],2:[function(require,module,exports){
+'use strict'
+
+var Backbone = require ('backbone'),
+	_ = require ('underscore'),
+	Contact = require('../models/contact.js');
+
+module.exports = Backbone.Collection.extend({
+	model: Contact,
+	//localStorage: new Backbone.LocalStorage.Store('contacts')
+});
+},{"../models/contact.js":3,"backbone":6,"underscore":8}],3:[function(require,module,exports){
 'use strict'
 
 var	Backbone = require('backbone');
@@ -32,17 +95,98 @@ var _ = require ('underscore');
 module.exports = Backbone.Model.extend({
   defaults: {
     name: null,
-    tel: null,
+    phone: null,
+    address:null,
     email: null,
-    avatar: null
+    photo: null
   },
 
   initialize: function () {
-  	this.set('avatar', _.random(1, 20) + '.jpg');
+  	this.set('photo', _.random(1, 30) + '.jpg');
   }
 });
 
-},{"backbone":3,"underscore":5}],3:[function(require,module,exports){
+},{"backbone":6,"underscore":8}],4:[function(require,module,exports){
+'use strict'
+
+var Backbone = require('backbone'),
+    _ = require('underscore'),
+    $ = require('jquery');
+
+module.exports = Backbone.View.extend({
+    template: window["ContactManager"]["contact.tmpl"] ,//_.template($('#contactTemplate').html()),
+
+    tagName: 'article',
+
+    className: 'col-lg-3 col-sm-6 col-xs-6 buffer',
+
+    events: {
+        'click button.deleteBtn': 'onClickDelete'
+    },
+
+    initialize: function() {
+        this.listenTo(this.model, 'remove', this.remove);
+        this.model.set('groupColor', this.renderContactHeader(this.model.get('group')));
+        this.render();
+    },
+
+    render: function() {
+        var html = this.template(this.model.toJSON());
+        this.$el.append(html);
+        return this;
+    },
+
+    renderContactHeader: function (group) {
+      switch (group){
+        case 'family':
+          return '#1E23B7';
+          break;
+      case 'colleague':
+          return '#be0010';
+          break;
+      case 'friend':
+        return '#1c9d12';
+        break
+      }
+    },
+
+
+    onClickDelete: function(e) {
+        e.preventDefault();
+        var confirmWindow =  confirm ('Please confirm whether to delete contact ' + this.model.get('name'));
+        if (confirmWindow === true) {
+          this.model.collection.remove(this.model);
+        }
+    }
+});
+
+},{"backbone":6,"jquery":7,"underscore":8}],5:[function(require,module,exports){
+'use strict'
+
+var Backbone = require ('backbone'),
+	_ = require ('underscore'),
+	$ = require('jquery'),
+	ContactView= require ('./contact.js');
+
+module.exports = Backbone.View.extend({
+  el: $('#directory'),
+
+  initialize: function () {
+  	this.render();
+  },
+
+  renderOne: function(contact) {
+    var itemView = new ContactView({model: contact});
+    this.$el.append(itemView.$el);
+  },
+
+  render: function() {
+  	_.each(this.collection.models, function(item) {
+  	    this.renderOne(item);
+  	}, this);
+  }
+});
+},{"./contact.js":4,"backbone":6,"jquery":7,"underscore":8}],6:[function(require,module,exports){
 (function (global){
 ;__browserify_shim_require__=require;(function browserifyShim(module, exports, require, define, browserify_shim__define__module__export__) {
 //     Backbone.js 1.1.2
@@ -1659,7 +1803,7 @@ module.exports = Backbone.Model.extend({
 }).call(global, undefined, undefined, undefined, undefined, function defineExport(ex) { module.exports = ex; });
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{}],4:[function(require,module,exports){
+},{}],7:[function(require,module,exports){
 (function (global){
 ;__browserify_shim_require__=require;(function browserifyShim(module, exports, require, define, browserify_shim__define__module__export__) {
 /*! jQuery v2.1.3 | (c) 2005, 2014 jQuery Foundation, Inc. | jquery.org/license */
@@ -1672,7 +1816,7 @@ module.exports = Backbone.Model.extend({
 }).call(global, undefined, undefined, undefined, undefined, function defineExport(ex) { module.exports = ex; });
 
 }).call(this,typeof global !== "undefined" ? global : typeof self !== "undefined" ? self : typeof window !== "undefined" ? window : {})
-},{}],5:[function(require,module,exports){
+},{}],8:[function(require,module,exports){
 (function (global){
 ;__browserify_shim_require__=require;(function browserifyShim(module, exports, require, define, browserify_shim__define__module__export__) {
 //     Underscore.js 1.8.2

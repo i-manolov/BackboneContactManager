@@ -1,6 +1,6 @@
 .contact {
     width: 310px; /*  350px; */
-    height: 90px;
+    height: 220px;
     background-color: white;
     border: solid;
     border-width: 1px;
@@ -54,7 +54,6 @@
     margin-left: 1px;
     padding-left: 30px;
     padding-right: 10px;
-    display: none;
 }
 .img-div {
     float: left;
@@ -64,7 +63,7 @@
 }
 
 .buffer {
-	margin-bottom: 140px;
+	margin-bottom: 50px;
 }
 
 .row {
@@ -73,6 +72,10 @@
 
 .bigger-glyphicon {
     font-size:1.1em;
+}
+
+.icon-black {
+    color:black;
 }
 
 label {

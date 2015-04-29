@@ -1,6 +1,6 @@
 {
     "directory": "vendor",
   	"scripts": {
-    	"postinstall": "wiredep -s ./app/index.html"
+    	"postinstall": "wiredep -s ./index.html"
   	}
 }

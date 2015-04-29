@@ -1,23 +1,13 @@
 var gulp = require('gulp'),
   browserify = require('browserify')
-	jshint = require('gulp-jshint'),
-	uglify = require('gulp-uglify'),
-	rename = require('gulp-rename'),
 	watch = require('gulp-watch'),
 	livereload = require('gulp-livereload'),
 	connect = require('gulp-connect'),
 	source = require('vinyl-source-stream'),
   mocha = require('gulp-mocha'),
-	wiredep = require('wiredep').stream;
-
-
-/* 
-gulp.task('lint', function() {
-    return gulp.src('js/*.js')
-        .pipe(jshint())
-        .pipe(jshint.reporter('default'));
-});
-*/
+	wiredep = require('wiredep').stream,
+  template = require('gulp-template-compile'),
+  concat = require ('gulp-concat');
 
 
 gulp.task('browserify', function() {
@@ -27,7 +17,7 @@ gulp.task('browserify', function() {
         //Pass desired output filename to vinyl-source-stream
         .pipe(source('bundle.js'))
         // Start piping stream to tasks!
-        .pipe(gulp.dest('./'))
+        .pipe(gulp.dest('./js'))
         .pipe(connect.reload());
 })
 
@@ -55,9 +45,17 @@ gulp.task('test', function() {
 
 gulp.task('webserver', function() {
   connect.server({
-  	root: '.',
+  	root: __dirname,
+    port:8080,
     livereload:true
   });
+});
+
+gulp.task('templates', function (){
+  return gulp.src('./js/templates/*.tmpl')
+    .pipe(template({namespace: 'ContactManager'}))
+    .pipe(concat('templates.js'))
+    .pipe(gulp.dest('./js/templates'))
 });
 
 gulp.task('watch', function() {
@@ -65,9 +63,10 @@ gulp.task('watch', function() {
     gulp.watch('./styles/*.css', ['css']);
     gulp.watch('./*.html', ['html']);
     gulp.watch('bower.json', ['bower']);
+    gulp.watch('./js/templates/*.tmpl', ['templates'])
     //gulp.watch('./test/*/*.js', ['test']);
 });
 
-gulp.task('default', ['bower', 'watch', 'webserver', 'browserify']);
+gulp.task('default', ['bower', 'watch', 'webserver', 'browserify', 'templates']);
 
 

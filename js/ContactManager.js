@@ -77,6 +77,8 @@ window.ContactManager = {
 
         router.on('route:showContacts', function() {
             var contactsView = new ContactsView({collection: contactsCollection});
+
+            $('#main-container').html(contactsView.render().$el);
         });
 
         router.on('route:newContact', function (){
@@ -86,9 +88,10 @@ window.ContactManager = {
 
             newContactForm.on('form:submitted', function(contact) {
               contactsCollection.add(contact);
-              var contactsView = new ContactsView({collection: contactsCollection});
               router.navigate('contacts', {trigger:true});
             });
+
+            $('#main-container').html(newContactForm.render().$el);
 
         });
 

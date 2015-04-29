@@ -78,6 +78,8 @@ window.ContactManager = {
 
         router.on('route:showContacts', function() {
             var contactsView = new ContactsView({collection: contactsCollection});
+
+            $('#main-container').html(contactsView.render().$el);
         });
 
         router.on('route:newContact', function (){
@@ -87,9 +89,10 @@ window.ContactManager = {
 
             newContactForm.on('form:submitted', function(contact) {
               contactsCollection.add(contact);
-              var contactsView = new ContactsView({collection: contactsCollection});
               router.navigate('contacts', {trigger:true});
             });
+
+            $('#main-container').html(newContactForm.render().$el);
 
         });
 
@@ -171,7 +174,7 @@ module.exports = Backbone.View.extend({
     initialize: function() {
         this.listenTo(this.model, 'remove', this.remove);
         this.model.set('groupColor', this.renderContactHeader(this.model.get('group')));
-        this.render();
+        //this.render();
     },
 
     render: function() {
@@ -214,21 +217,20 @@ var Backbone = require('backbone'),
  module.exports = Backbone.View.extend({
   template: window['ContactManager']['contactform.tmpl'],
 
-  el: $("#main-container"),
-
   events: {
     'submit .contact-form': 'onFormSubmit'
   },
 
   initialize: function () {
-    this.render();
+    //this.render();
   },
 
   render: function() {
     var html = this.template(_.extend(this.model.toJSON(), {
       isNew: this.model.isNew()
     }));
-    this.$el.html(html);
+    this.$el.append(html);
+    return this;
   },
 
   onFormSubmit: function(e) {
@@ -248,29 +250,40 @@ var Backbone = require('backbone'),
 },{"backbone":8,"jquery":9,"underscore":10}],7:[function(require,module,exports){
 'use strict'
 
-var Backbone = require ('backbone'),
-	_ = require ('underscore'),
-	$ = require('jquery'),
-	ContactView= require ('./contact.js');
+var Backbone = require('backbone'),
+    _ = require('underscore'),
+    $ = require('jquery'),
+    ContactView = require('./contact.js');
 
 module.exports = Backbone.View.extend({
-  el: $('#directory'),
+    template: window['ContactManager']['contacts.tmpl'],
 
-  initialize: function () {
-  	this.render();
-  },
+    //el: $('#directory'),
 
-  renderOne: function(contact) {
-    var itemView = new ContactView({model: contact});
-    this.$el.append(itemView.$el);
-  },
+    initialize: function() {
+        //this.render();
+    },
 
-  render: function() {
-  	_.each(this.collection.models, function(item) {
-  	    this.renderOne(item);
-  	}, this);
-  }
+    renderOne: function(contact) {
+        var itemView = new ContactView({
+            model: contact
+        });
+
+        this.$('#directory').append(itemView.render().$el);
+    },
+
+    render: function() {
+        var html = this.template();
+        this.$el.html(html);
+        console.log(html);
+
+        this.collection.each(this.renderOne, this);
+
+
+        return this;
+    }
 });
+
 },{"./contact.js":5,"backbone":8,"jquery":9,"underscore":10}],8:[function(require,module,exports){
 (function (global){
 ;__browserify_shim_require__=require;(function browserifyShim(module, exports, require, define, browserify_shim__define__module__export__) {

@@ -48,3 +48,15 @@ __e( phone ) +
 }
 return __p
 }})();
+(function() {
+window["ContactManager"] = window["ContactManager"] || {};
+
+window["ContactManager"]["contacts.tmpl"] = function(obj) {
+obj || (obj = {});
+var __t, __p = '', __e = _.escape;
+with (obj) {
+__p += '<div class="row">\n    <a href="#contacts/new" class="btn btn-primary btn-lg col-sm-offset-5">\n        <span class="glyphicon glyphicon-plus"></span>Add New Contact\n    </a>\n</div>\n<div id="directory" class="row">\n</div>\n';
+
+}
+return __p
+}})();

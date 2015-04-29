@@ -7,21 +7,20 @@ var Backbone = require('backbone'),
  module.exports = Backbone.View.extend({
   template: window['ContactManager']['contactform.tmpl'],
 
-  el: $("#main-container"),
-
   events: {
     'submit .contact-form': 'onFormSubmit'
   },
 
   initialize: function () {
-    this.render();
+    //this.render();
   },
 
   render: function() {
     var html = this.template(_.extend(this.model.toJSON(), {
       isNew: this.model.isNew()
     }));
-    this.$el.html(html);
+    this.$el.append(html);
+    return this;
   },
 
   onFormSubmit: function(e) {

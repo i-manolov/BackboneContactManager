@@ -18,7 +18,7 @@ module.exports = Backbone.View.extend({
     initialize: function() {
         this.listenTo(this.model, 'remove', this.remove);
         this.model.set('groupColor', this.renderContactHeader(this.model.get('group')));
-        this.render();
+        //this.render();
     },
 
     render: function() {

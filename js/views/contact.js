@@ -12,7 +12,7 @@ module.exports = Backbone.View.extend({
     className: 'col-lg-3 col-sm-6 col-xs-6 buffer',
 
     events: {
-        'click button.deleteBtn': 'onClickDelete'
+        'click a.deleteBtn': 'onClickDelete'
     },
 
     initialize: function() {

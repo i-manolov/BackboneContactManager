@@ -1,4 +1,4 @@
-<a class="btn contact">
+<button  class="btn contact">
     <div class="contact-header" style="background-color:<%= groupColor %>"></div>
     <div class="img-div">
         <img src="/img/<%- photo %>" class="contact-image img-circle">
@@ -8,13 +8,15 @@
     </div>
     <div class='contact-info'> 
         <div style="float:right;">
-            <button href= "#contacts/edit/<%- id %>" class="btn btn-primary editBtn" title="Edit">
+            <a href= "#contacts/edit/<%- id %>" class="btn btn-primary editBtn" title="Edit">
                 <span class="glyphicon glyphicon-edit bigger-glyphicon"></span>
-            </button>
-            <button type="button" class="btn btn-danger deleteBtn" title="Delete">
+            </a>
+            <a type="button" class="btn btn-danger deleteBtn" title="Delete">
                 <span class="glyphicon glyphicon-trash bigger-glyphicon"></span>
-            </button>
+            </a>
         </div>
+    </div>
+    <div style=" text-align:left;">
         <br><br>
         <span class='glyphicon glyphicon-info-sign icon-black'></span>
         <label><%= group %></label>
@@ -28,4 +30,4 @@
         <span class="glyphicon glyphicon-earphone icon-black"></span>
         <label><%= phone %></label>
     </div>
-</a>
+</button>

@@ -66,7 +66,6 @@ window.ContactManager = {
     Routers: {},
     init: function() {
         var contactsCollection = new ContactsCollection(contacts);
-        console.log(contactsCollection);
         var router = new Router();
 
         router.on('route:home', function() {
@@ -91,7 +90,6 @@ window.ContactManager = {
 
             newContactForm.on('form:submitted', function(contact) {
                 contact.id = contactsCollection.isEmpty() ? 1 : (_.max(contactsCollection.pluck('id')) + 1);
-                console.log(contact.id);
                 contactsCollection.add(contact);
                 router.navigate('contacts', {
                     trigger: true
@@ -115,7 +113,7 @@ window.ContactManager = {
               router.navigate('contacts', true);
             });
 
-            $('.main-container').html(editContactForm.$el);
+            $('#main-container').html(editContactForm.$el);
           } 
           else {
             router.navigate('contacts', true);

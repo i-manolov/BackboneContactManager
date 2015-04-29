@@ -11,7 +11,7 @@ module.exports = Backbone.View.extend({
     //el: $('#directory'),
 
     initialize: function() {
-        //this.render();
+        this.render();
     },
 
     renderOne: function(contact) {
@@ -19,17 +19,17 @@ module.exports = Backbone.View.extend({
             model: contact
         });
 
-        this.$('#directory').append(itemView.render().$el);
+        this.$('#directory').append(itemView.$el);
     },
 
     render: function() {
         var html = this.template();
+
         this.$el.html(html);
-        console.log(html);
 
         this.collection.each(this.renderOne, this);
 
 
-        return this;
+        //return this;
     }
 });

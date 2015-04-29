@@ -12,7 +12,7 @@ var Backbone = require('backbone'),
   },
 
   initialize: function () {
-    //this.render();
+    this.render();
   },
 
   render: function() {
@@ -20,7 +20,7 @@ var Backbone = require('backbone'),
       isNew: this.model.isNew()
     }));
     this.$el.append(html);
-    return this;
+    //return this;
   },
 
   onFormSubmit: function(e) {

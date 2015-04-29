@@ -1,112 +1,138 @@
 (function e(t,n,r){function s(o,u){if(!n[o]){if(!t[o]){var a=typeof require=="function"&&require;if(!u&&a)return a(o,!0);if(i)return i(o,!0);var f=new Error("Cannot find module '"+o+"'");throw f.code="MODULE_NOT_FOUND",f}var l=n[o]={exports:{}};t[o][0].call(l.exports,function(e){var n=t[o][1][e];return s(n?n:e)},l,l.exports,e,t,n,r)}return n[o].exports}var i=typeof require=="function"&&require;for(var o=0;o<r.length;o++)s(r[o]);return s})({1:[function(require,module,exports){
 'use strict'
 
-var Backbone = require ('backbone'),
+var Backbone = require('backbone'),
     Contact = require('./models/contact.js'),
     ContactForm = require('./views/contactform.js'),
-    ContactsView = require ('./views/contacts.js'),
-    ContactsCollection = require ('./collections/contacts.js'),
-    Router = require ('./router/router.js'),
-	$ = require('jquery');
+    ContactsView = require('./views/contacts.js'),
+    ContactsCollection = require('./collections/contacts.js'),
+    Router = require('./router/router.js'),
+    $ = require('jquery');
 
 
 var contacts = [{
-    	name: 'Contact 1',
-    	address: '1 street, a town, a city, AB12 3CD',
-    	phone: '0123456789',
-    	email: 'anemail@me.com',
-    	group: 'family'
-	}, {
-    	name: 'Contact 2',
-    	address: '1 street, a town, a city, AB12 3CD',
-    	phone: '0123456789',
-    	email: 'anemail@me.com',
-    	group: 'family'
-	}, {
-    	name: 'Contact 3',
-    	address: '1 street, a town, a city, AB12 3CD',
-    	phone: '0123456789',
-    	email: 'anemail@me.com',
-    	group: 'friend'
-	}, {
-    	name: 'Contact 4',
-    	address: '1 street, a town, a city, AB12 3CD',
-    	phone: '0123456789',
-    	email: 'anemail@me.com',
-    	group: 'colleague'
-	}, {
-    	name: 'Contact 5',
-    	address: '1 street, a town, a city, AB12 3CD',
-    	phone: '0123456789',
-    	email: 'anemail@me.com',
-    	group: 'family'
-	}, {
-    	name: 'Contact 6',
-    	address: '1 street, a town, a city, AB12 3CD',
-    	phone: '0123456789',
-    	email: 'anemail@me.com',
-    	group: 'colleague'
-	}, {
-    	name: 'Contact 7',
-    	address: '1 street, a town, a city, AB12 3CD',
-    	phone: '0123456789',
-    	email: 'anemail@me.com',
-    	group: 'friend'
-	}, {
-    	name: 'Contact 8',
-    	address: '1 street, a town, a city, AB12 3CD',
-    	phone: '0123456789',
-    	email: 'anemail@me.com',
-    	group: 'family'
+    name: 'Contact 1',
+    address: '1 street, a town, a city, AB12 3CD',
+    phone: '0123456789',
+    email: 'anemail@me.com',
+    group: 'family'
+}, {
+    name: 'Contact 2',
+    address: '1 street, a town, a city, AB12 3CD',
+    phone: '0123456789',
+    email: 'anemail@me.com',
+    group: 'family'
+}, {
+    name: 'Contact 3',
+    address: '1 street, a town, a city, AB12 3CD',
+    phone: '0123456789',
+    email: 'anemail@me.com',
+    group: 'friend'
+}, {
+    name: 'Contact 4',
+    address: '1 street, a town, a city, AB12 3CD',
+    phone: '0123456789',
+    email: 'anemail@me.com',
+    group: 'colleague'
+}, {
+    name: 'Contact 5',
+    address: '1 street, a town, a city, AB12 3CD',
+    phone: '0123456789',
+    email: 'anemail@me.com',
+    group: 'family'
+}, {
+    name: 'Contact 6',
+    address: '1 street, a town, a city, AB12 3CD',
+    phone: '0123456789',
+    email: 'anemail@me.com',
+    group: 'colleague'
+}, {
+    name: 'Contact 7',
+    address: '1 street, a town, a city, AB12 3CD',
+    phone: '0123456789',
+    email: 'anemail@me.com',
+    group: 'friend'
+}, {
+    name: 'Contact 8',
+    address: '1 street, a town, a city, AB12 3CD',
+    phone: '0123456789',
+    email: 'anemail@me.com',
+    group: 'family'
 }]
 
 window.ContactManager = {
-	Models: {},
-	Collections: {},
-	Views: {},
-	Routers: {},
-	init: function () {
+    Models: {},
+    Collections: {},
+    Views: {},
+    Routers: {},
+    init: function() {
         var contactsCollection = new ContactsCollection(contacts);
+        console.log(contactsCollection);
         var router = new Router();
 
         router.on('route:home', function() {
-          router.navigate('contacts', {
-            trigger: true,
-            replace: true
-          });
+            router.navigate('contacts', {
+                trigger: true,
+                replace: true
+            });
         });
 
         router.on('route:showContacts', function() {
-            var contactsView = new ContactsView({collection: contactsCollection});
+            var contactsView = new ContactsView({
+                collection: contactsCollection
+            });
 
-            $('#main-container').html(contactsView.render().$el);
+            $('#main-container').html(contactsView.$el);
         });
 
-        router.on('route:newContact', function (){
+        router.on('route:newContact', function() {
             var newContactForm = new ContactForm({
                 model: new Contact()
             });
 
             newContactForm.on('form:submitted', function(contact) {
-              contactsCollection.add(contact);
-              router.navigate('contacts', {trigger:true});
+                contact.id = contactsCollection.isEmpty() ? 1 : (_.max(contactsCollection.pluck('id')) + 1);
+                console.log(contact.id);
+                contactsCollection.add(contact);
+                router.navigate('contacts', {
+                    trigger: true
+                });
             });
 
-            $('#main-container').html(newContactForm.render().$el);
+            $('#main-container').html(newContactForm.$el);
+        });
+        
+        router.on('route:editContact', function(id) {
+          var contact = contactsCollection.get(id);
+          var editContactForm;
 
+          if (contact) {
+            editContactForm = new ContactForm({
+                model: contact
+            });
+
+            editContactForm.on('form:submitted', function(attrs) {
+              contact.set(attrs);
+              router.navigate('contacts', true);
+            });
+
+            $('.main-container').html(editContactForm.$el);
+          } 
+          else {
+            router.navigate('contacts', true);
+          }
         });
 
+
+
         Backbone.history.start({});
-	}
+    }
 
 }
 
-$(document).ready(function () {
+$(document).ready(function() {
     ContactManager.init();
 });
-
-
-
 
 },{"./collections/contacts.js":2,"./models/contact.js":3,"./router/router.js":4,"./views/contactform.js":6,"./views/contacts.js":7,"backbone":8,"jquery":9}],2:[function(require,module,exports){
 'use strict'
@@ -125,8 +151,11 @@ module.exports = Backbone.Collection.extend({
 var	Backbone = require('backbone');
 var _ = require ('underscore');
 
+var globalCounter = 1;
+
 module.exports = Backbone.Model.extend({
   defaults: {
+    id:null,
     name: null,
     phone: null,
     address:null,
@@ -137,6 +166,8 @@ module.exports = Backbone.Model.extend({
 
   initialize: function () {
   	this.set('photo', _.random(1, 30) + '.jpg');
+    this.set('id',  globalCounter);
+    globalCounter += 1;
   }
 });
 
@@ -174,13 +205,13 @@ module.exports = Backbone.View.extend({
     initialize: function() {
         this.listenTo(this.model, 'remove', this.remove);
         this.model.set('groupColor', this.renderContactHeader(this.model.get('group')));
-        //this.render();
+        this.render();
     },
 
     render: function() {
         var html = this.template(this.model.toJSON());
         this.$el.append(html);
-        return this;
+        //return this;
     },
 
     renderContactHeader: function (group) {
@@ -222,7 +253,7 @@ var Backbone = require('backbone'),
   },
 
   initialize: function () {
-    //this.render();
+    this.render();
   },
 
   render: function() {
@@ -230,7 +261,7 @@ var Backbone = require('backbone'),
       isNew: this.model.isNew()
     }));
     this.$el.append(html);
-    return this;
+    //return this;
   },
 
   onFormSubmit: function(e) {
@@ -261,7 +292,7 @@ module.exports = Backbone.View.extend({
     //el: $('#directory'),
 
     initialize: function() {
-        //this.render();
+        this.render();
     },
 
     renderOne: function(contact) {
@@ -269,18 +300,18 @@ module.exports = Backbone.View.extend({
             model: contact
         });
 
-        this.$('#directory').append(itemView.render().$el);
+        this.$('#directory').append(itemView.$el);
     },
 
     render: function() {
         var html = this.template();
+
         this.$el.html(html);
-        console.log(html);
 
         this.collection.each(this.renderOne, this);
 
 
-        return this;
+        //return this;
     }
 });
 

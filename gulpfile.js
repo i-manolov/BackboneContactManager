@@ -59,12 +59,13 @@ gulp.task('templates', function (){
 });
 
 gulp.task('watch', function() {
-    gulp.watch('./js/**/*.js', ['browserify']);
-    gulp.watch('./styles/*.css', ['css']);
-    gulp.watch('./*.html', ['html']);
-    gulp.watch('bower.json', ['bower']);
-    gulp.watch('./js/templates/*.tmpl', ['templates']);
-    //gulp.watch('./test/*/*.js', ['test']);
+  //ignore bundle.js
+  gulp.watch(['./js/**/*.js', '!./js/bundle.js'], ['browserify']);
+  gulp.watch('./styles/*.css', ['css']);
+  gulp.watch('./*.html', ['html']);
+  gulp.watch('bower.json', ['bower']);
+  gulp.watch('./js/templates/*.tmpl', ['templates']);
+  //gulp.watch('./test/*/*.js', ['test']);
 });
 
 gulp.task('default', ['bower', 'watch', 'webserver', 'browserify', 'templates']);
